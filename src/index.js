@@ -1,3 +1,8 @@
-import LibraryExample from './main.vue'
+export {
+  default as LibraryExample
+} from "./main.vue";
 
-export default LibraryExample
+export {
+  default as BarChart
+} from "./bar-chart.vue";
+

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import LibraryExample from '../src/index.js'
+import {LibraryExample} from '../src/index.js'
 
 export default {
   components: {LibraryExample},

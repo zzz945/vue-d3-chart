@@ -4,7 +4,7 @@
       g(class="x-axis", v-axis:y="yAxis")
         text(class="label", fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
       g(class="y-axis", v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
-        text(class="label", fill="#000", :transform="`translate(${dataViewWidth}, -20)`") {{axis.yLabel}}
+        text(class="label", fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}
       path(v-for="l in lines", :d="l.d", :style="{fill: 'none', stroke: l.stroke}")
       g(v-if="lines.length > 1", v-for="(l, i) in lines", :transform="`translate(${dataViewWidth - 80}, ${20*i})`")
         rect(:x="0", :y="0", :width="20", :height="4", :fill="l.stroke")

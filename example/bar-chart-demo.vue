@@ -22,8 +22,8 @@ export default {
         },
         y: [0, 100],
         yDiv: 10,
-        xLabel: "星期",
-        yLabel: "温度",
+        xLabel: "Day",
+        yLabel: "Temp",
       },
       dataset: [
         {x: 0, y: 84, color: 'red'},

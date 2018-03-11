@@ -4,7 +4,7 @@
       g(class="y-axis", v-axis:y="yAxis")
         text(class="label", fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
       g(class="x-axis", v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
-        text(class="label", fill="#000", :transform="`translate(${dataViewWidth}, -20)`") {{axis.yLabel}}
+        text(class="label", fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}
       rect(v-for="r in rectList", :x="r.x", :y="r.y", :width="r.width", :height="r.height", :fill="r.color")
 </template>
 

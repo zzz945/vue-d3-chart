@@ -15,8 +15,8 @@ const c1 = {
     xDiv: 5,
     y: [0, 100],
     yDiv: 10,
-    xLabel: "美元",
-    yLabel: "重量",
+    xLabel: "USD",
+    yLabel: "KG",
   },
   line: {
     dataset: [
@@ -50,8 +50,8 @@ const c2 = {
     xDiv: 7,
     y: [0, 100],
     yDiv: 10,
-    xLabel: "星期",
-    yLabel: "温度",
+    xLabel: "Day",
+    yLabel: "Temp",
   },
   line: {
     dataset: [
@@ -70,11 +70,11 @@ const c3 = {
   axis: c2.axis,
   line: [
     Object.assign({}, c2.line, {
-      label: '中国',
+      label: 'China',
       color: 'green',
     }),
     {
-      label: '美国',
+      label: 'American',
       color: 'red',
       dataset: [
         {x: 0, y: 34},

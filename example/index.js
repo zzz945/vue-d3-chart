@@ -1,5 +1,4 @@
-// import example from './demo.vue'
-import example from './bar-chart-demo.vue'
+import example from './demo.vue'
 
 new Vue({
   el: '#app',

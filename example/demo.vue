@@ -1,14 +1,18 @@
 <template lang="pug">
   .demo
-    p.title Demo
-    library-example
+    bar-chart-demo
+    line-chart-demo
 </template>
 
 <script>
-import {LibraryExample} from '../src/index.js'
+import BarChartDemo from './bar-chart-demo.vue'
+import LineChartDemo from './line-chart-demo.vue'
 
 export default {
-  components: {LibraryExample},
+  components: {
+    BarChartDemo,
+    LineChartDemo
+  },
 
   data () {
     return {
@@ -19,12 +23,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-  .title
-    font-size: 32px
-    font-weight: bold
-</style>
-
-
-

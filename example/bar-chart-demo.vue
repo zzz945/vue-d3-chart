@@ -1,5 +1,5 @@
 <template lang="pug">
-  .demo
+  .bar-chart-demo
     p.title Bar Chart Demo
     bar-chart(:width="800", :height="400", :axis="axis", :dataset="dataset")
 </template>
@@ -15,34 +15,50 @@ export default {
   data () {
     return {
       axis: {
-        x: [2011, 2018],
-        xDiv: 6,
+        x: [-1, 7],
+        xFormat (d) {
+          if (d === -1 || d === 7) return ''
+          return ['Sunday', 'Monday', 'Tudsday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d]
+        },
         y: [0, 100],
-        yDiv: 10
+        yDiv: 10,
+        xLabel: "星期",
+        yLabel: "温度",
       },
       dataset: [
-        {name: 2011, value: 84},
-        {name: 2012, value: 57},
-        {name: 2013, value: 76},
-        {name: 2014, value: 43},
-        {name: 2015, value: 32},
-        {name: 2016, value: 38},
-        {name: 2017, value: 28},
-        {name: 2018, value: 8},
-      ],
+        {x: 0, y: 84, color: 'red'},
+        {x: 1, y: 57, color: 'green'},
+        {x: 2, y: 76, color: 'red'},
+        {x: 3, y: 43, color: 'green'},
+        {x: 4, y: 32, color: 'red'},
+        {x: 5, y: 38, color: 'green'},
+        {x: 6, y: 28, color: 'red'},
+      ]
     }
   },
-
+  computed: {
+  },
   methods: {
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+  .bar-chart-demo
+    text-align: center
   .title
+    text-align: center
     font-size: 32px
-    font-weight: bold
+    font-weight: bold 
+  .tick
+    font-size: 20px   
 </style>
 
-
-
+<style lang="stylus">
+  .bar-chart-demo
+    // 定制坐标轴样式
+    .tick text
+      font-size: 14px
+    .x-axis .tick text
+      transform: translateY(4px) rotate(-15deg)
+</style>

@@ -1,11 +1,14 @@
 <template lang="pug">
-  svg.bar-chart(:width="width", :height="height")
+  svg.line-chart(:width="width", :height="height")
     g(:transform="`translate(${padding}, ${padding})`")
-      g(class="y-axis", v-axis:y="yAxis")
+      g(class="x-axis", v-axis:y="yAxis")
         text(class="label", fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
-      g(class="x-axis", v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
+      g(class="y-axis", v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
         text(class="label", fill="#000", :transform="`translate(${dataViewWidth}, -20)`") {{axis.yLabel}}
-      rect(v-for="r in rectList", :x="r.x", :y="r.y", :width="r.width", :height="r.height", :fill="r.color")
+      path(v-for="l in lines", :d="l.d", :style="{fill: 'none', stroke: l.stroke}")
+      g(v-if="lines.length > 1", v-for="(l, i) in lines", :transform="`translate(${dataViewWidth - 80}, ${20*i})`")
+        rect(:x="0", :y="0", :width="20", :height="4", :fill="l.stroke")
+        text(:x="40", :y="8", fill="#000") {{l.label}}
 </template>
 
 <script>
@@ -14,7 +17,7 @@
   const padding = 40
 
   export default {
-    name: 'bar-chart',
+    name: 'line-chart',
 
     mixins: [AxisDirectorMixin],
 
@@ -26,13 +29,12 @@
         type: Object,
         required: true
       }, 
-      dataset: { // 数据
-        type: Array,
+      line: { // 数据
+        type: Array | Object,
         required: true
       }, 
       width: {}, // 图表宽
       height: {}, // 图表高
-      curve: {}, // 曲线类型，undefined为直线
     },
 
     data () {
@@ -51,9 +53,6 @@
       dataViewWidth () {
         return this.width - 2*this.padding
       },
-      xDiv () {
-        return this.axis.xDiv ? this.axis.xDiv : this.axis.x[1] - this.axis.x[0]
-      },
       xScale () {
         return d3.scaleLinear()
           .domain(this.axis.x)
@@ -68,7 +67,7 @@
         return {
           scale: this.xScale,
           format: this.axis.xFormat,
-          div: this.xDiv
+          div: this.axis.xDiv
         };
       },
       yAxis () {
@@ -78,22 +77,29 @@
           div: this.axis.yDiv
         };
       },
-      bandWidth () {
-        return this.dataViewWidth/this.xDiv
-      },
-      rectList () {
-        return this.dataset.map(d => {
-          const h = this.yScale(d.y)
-          const w = this.bandWidth/2 // Bar宽度为X轴单位宽度的一半
-          return {
-            x: this.xScale(d.x) - w/2,
-            y: h,
-            width: w,
-            height: this.dataViewHeight - h,
-            color: d.color ? d.color : 'red'
-          }
-        })
-      },
+      lines () {
+        let path = d3.line()
+          .x(d => this.xScale(d.x))
+          .y(d => this.yScale(d.y));
+        
+        if (Array.isArray(this.line)) {
+          return this.line.map(l => {
+            const p = l.curve ? path.curve(l.curve) : path
+            return {
+              d: p(l.dataset),
+              label: l.label,
+              stroke: l.color ? l.color : 'black'
+            }
+          })
+        }
+        path = this.line.curve ? path.curve(this.line.curve) : path
+
+        return [{
+          d: path(this.line.dataset),
+          label: this.line.label,
+          stroke: this.line.color ? this.line.color: 'black'
+        }]
+      }
     },
 
     mounted() {
@@ -105,7 +111,7 @@
 </script>
 
 <style lang="stylus">
-  .bar-chart
+  .line-chart
     .tick text
       font-size: 14px
     .label

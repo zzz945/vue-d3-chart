@@ -28,13 +28,19 @@
       axis: { // 坐标轴
         type: Object,
         required: true
-      }, 
+      },
       line: { // 数据
         type: Array | Object,
         required: true
-      }, 
-      width: {}, // 图表宽
-      height: {}, // 图表高
+      },
+      width: { // 图表宽
+        type: Number,
+        required: true
+      },
+      height: { // 图表高
+        type: Number,
+        required: true
+      },
     },
 
     data () {
@@ -81,7 +87,7 @@
         let path = d3.line()
           .x(d => this.xScale(d.x))
           .y(d => this.yScale(d.y));
-        
+
         if (Array.isArray(this.line)) {
           return this.line.map(l => {
             const p = l.curve ? path.curve(l.curve) : path

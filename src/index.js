@@ -13,3 +13,7 @@ export {
 export {
   default as PieChart
 } from "./pie-chart.vue";
+
+export {
+  default as RadarChart
+} from "./radar-chart.vue";

@@ -30,8 +30,14 @@
         type: Array,
         required: true
       },
-      width: {}, // 图表宽
-      height: {}, // 图表高
+      width: { // 图表宽
+        type: Number,
+        required: true
+      },
+      height: { // 图表高
+        type: Number,
+        required: true
+      },
     },
 
     data () {

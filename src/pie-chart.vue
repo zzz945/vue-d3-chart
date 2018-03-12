@@ -24,7 +24,10 @@
         type: Array,
         required: true
       },
-      width: {}, // 图表宽
+      width: { // 图表宽
+        type: Number,
+        required: true
+      },
       innerRadius: { // 内半径
         type: Number,
         default: 0

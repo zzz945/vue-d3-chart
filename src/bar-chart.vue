@@ -25,14 +25,13 @@
       axis: { // 坐标轴
         type: Object,
         required: true
-      }, 
+      },
       dataset: { // 数据
         type: Array,
         required: true
-      }, 
+      },
       width: {}, // 图表宽
       height: {}, // 图表高
-      curve: {}, // 曲线类型，undefined为直线
     },
 
     data () {

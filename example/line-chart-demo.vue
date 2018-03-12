@@ -90,6 +90,8 @@ const c3 = {
 }
 
 export default {
+  name: "line-chart-demo",
+
   components: {
     LineChart
   },

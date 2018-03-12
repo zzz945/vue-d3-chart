@@ -9,3 +9,7 @@ export {
 export {
   default as LineChart
 } from "./line-chart.vue";
+
+export {
+  default as PieChart
+} from "./pie-chart.vue";

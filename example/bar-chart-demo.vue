@@ -8,6 +8,8 @@
 import {BarChart} from '../src/index.js'
 
 export default {
+  name: "bar-chart-demo",
+
   components: {
     BarChart
   },
@@ -49,9 +51,7 @@ export default {
   .title
     text-align: center
     font-size: 32px
-    font-weight: bold 
-  .tick
-    font-size: 20px   
+    font-weight: bold
 </style>
 
 <style lang="stylus">

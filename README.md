@@ -2,7 +2,7 @@
 A chart library base on vue and d3
 ## Usage （Unavailable due to being under development）
 ```
-npm install vue-d3-chart 
+npm install vue-d3-chart
 ```
 ## Or you can develop your own chart library based on this project
 ```
@@ -18,3 +18,4 @@ A demo is now running
 ![2018-03-11 6 24 17](https://user-images.githubusercontent.com/21496977/37252279-820e3928-2559-11e8-8021-779eeb89c765.png)
 ![2018-03-11 6 24 23](https://user-images.githubusercontent.com/21496977/37252280-823f89ce-2559-11e8-83c8-4e5e3c97b4f0.png)
 ![2018-03-11 6 24 27](https://user-images.githubusercontent.com/21496977/37252281-8270e30c-2559-11e8-9885-1962436688a9.png)
+![2018-03-12 2 37 00](https://user-images.githubusercontent.com/21496977/37268873-13fa7d16-2603-11e8-9eb8-95a1b874e68b.png)

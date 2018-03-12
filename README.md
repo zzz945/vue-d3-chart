@@ -20,3 +20,9 @@ A demo is now running
 ![2018-03-11 6 24 27](https://user-images.githubusercontent.com/21496977/37252281-8270e30c-2559-11e8-9885-1962436688a9.png)
 ![2018-03-12 2 37 00](https://user-images.githubusercontent.com/21496977/37268873-13fa7d16-2603-11e8-9eb8-95a1b874e68b.png)
 ![2018-03-12 7 02 56](https://user-images.githubusercontent.com/21496977/37280189-0aa56102-2628-11e8-9977-70f6881e2d4f.png)
+## Contributing
+1. Fork this project
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request

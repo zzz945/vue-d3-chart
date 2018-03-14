@@ -15,8 +15,8 @@ npm install vue-d3-chart
 A demo is now running
 ## Screen Shot
 ![2018-03-11 6 24 12](https://user-images.githubusercontent.com/21496977/37252278-81dc109c-2559-11e8-9362-d225130d893c.png)
-![2018-03-11 6 24 17](https://user-images.githubusercontent.com/21496977/37252279-820e3928-2559-11e8-8021-779eeb89c765.png)
-![2018-03-11 6 24 23](https://user-images.githubusercontent.com/21496977/37252280-823f89ce-2559-11e8-83c8-4e5e3c97b4f0.png)
+![2018-03-14 3 16 51](https://user-images.githubusercontent.com/21496977/37388274-cf1aa68c-279a-11e8-8636-35879c07bba6.png)
+![2018-03-14 3 17 04](https://user-images.githubusercontent.com/21496977/37388276-cf4e6bfc-279a-11e8-914f-3fd5ff97357a.png)
 ![2018-03-11 6 24 27](https://user-images.githubusercontent.com/21496977/37252281-8270e30c-2559-11e8-9885-1962436688a9.png)
 ![2018-03-12 2 37 00](https://user-images.githubusercontent.com/21496977/37268873-13fa7d16-2603-11e8-9eb8-95a1b874e68b.png)
 ![2018-03-12 7 02 56](https://user-images.githubusercontent.com/21496977/37280189-0aa56102-2628-11e8-9977-70f6881e2d4f.png)

@@ -1,9 +1,9 @@
 <template lang="pug">
   .line-chart-demo
     p.title Line Chart Demo
-    line-chart(:width="800", :height="400", :axis="c1.axis", :line="c1.line")
-    line-chart(:width="800", :height="400", :axis="c2.axis", :line="c2.line")
-    line-chart(:width="800", :height="400", :axis="c3.axis", :line="c3.line")
+    line-chart(:width="800", :height="400", :axis="c1.axis", :line="c1.line", @action="onLineChartAction")
+    line-chart(:width="800", :height="400", :axis="c2.axis", :line="c2.line", @action="onLineChartAction")
+    line-chart(:width="800", :height="400", :axis="c3.axis", :line="c3.line", @action="onLineChartAction")
 </template>
 
 <script>
@@ -19,6 +19,7 @@ const c1 = {
     yLabel: "KG",
   },
   line: {
+    color: 'red',
     dataset: [
       {x: 104, y: 84},
       {x: 150, y: 57},
@@ -54,6 +55,7 @@ const c2 = {
     yLabel: "Temp",
   },
   line: {
+    color: 'green',
     dataset: [
       {x: 0, y: 84},
       {x: 1, y: 57},
@@ -106,6 +108,17 @@ export default {
   computed: {
   },
   methods: {
+    onLineChartAction (params) {
+      const {origin, act, payload} = params
+
+      switch (act) {
+        case origin.ACT_CLICK:
+          alert(`Line ${payload} clicked`)
+          break
+        default:
+          break
+      }
+    }
   }
 }
 </script>

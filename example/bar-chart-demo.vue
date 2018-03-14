@@ -1,7 +1,7 @@
 <template lang="pug">
   .bar-chart-demo
     p.title Bar Chart Demo
-    bar-chart(:width="800", :height="400", :axis="axis", :dataset="dataset")
+    bar-chart(:width="800", :height="400", :axis="axis", :dataset="dataset", @action="onBarChartAction")
 </template>
 
 <script>
@@ -41,6 +41,17 @@ export default {
   computed: {
   },
   methods: {
+    onBarChartAction (params) {
+      const {origin, act, payload} = params
+
+      switch (act) {
+        case origin.ACT_CLICK:
+          alert(`Bar ${payload} clicked`)
+          break
+        default:
+          break
+      }
+    }
   }
 }
 </script>

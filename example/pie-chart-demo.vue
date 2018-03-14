@@ -1,8 +1,8 @@
 <template lang="pug">
   .pie-chart-demo
     p.title Pie Chart Demo
-    pie-chart(:width="400", :dataset="dataset")
-    pie-chart(:width="400", :innerRadius="100", :padAngle="0.05", :dataset="dataset")
+    pie-chart(:width="400", :dataset="dataset", @action="onPieChartAction")
+    pie-chart(:width="400", :innerRadius="100", :padAngle="0.05", :dataset="dataset", @action="onPieChartAction")
 </template>
 
 <script>
@@ -28,6 +28,17 @@ export default {
   computed: {
   },
   methods: {
+    onPieChartAction (params) {
+      const {origin, act, payload} = params
+
+      switch (act) {
+        case origin.ACT_CLICK:
+          alert(`Region ${payload} clicked`)
+          break
+        default:
+          break
+      }
+    }
   }
 }
 </script>

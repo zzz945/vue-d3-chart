@@ -1,12 +1,14 @@
 <template lang="pug">
   svg.pie-chart(:width="width", :height="height")
-    g(v-for="(d, i) in dataset", :transform="`translate(${padding + 90*i}, ${padding})`")
-      rect(:x="0", :y="0", :width="20", :height="8", :fill="d.color")
-      text(:x="30", :y="8", fill="#000") {{d.label}}
-    g(:transform="`translate(${padding + pieRaidus}, ${padding + descriptionHeight + pieRaidus})`")
-      path(v-for="(d, i) in arcs", :d="d", :style="{fill: dataset[i].color}")
-      text(v-for="(d, i) in arcsData",
-        :transform="`translate(${textRasius * Math.sin((d.endAngle + d.startAngle)/2) - padding/3}, ${-textRasius * Math.cos((d.endAngle + d.startAngle)/2) + padding/6})`") {{`${dataset[i].value * 100}%`}}
+    g.group(v-for="(d, i) in arcsData",
+      :transform="`translate(${padding}, ${padding})`"
+      @click="onClickGroup(i)")
+      g(:transform="`translate(${pieRaidus}, ${descriptionHeight + pieRaidus})`")
+        path(:d="arcs[i]", :style="{fill: dataset[i].color}")
+        text(:transform="`translate(${textRasius * Math.sin((d.endAngle + d.startAngle)/2) - padding/3}, ${-textRasius * Math.cos((d.endAngle + d.startAngle)/2) + padding/6})`") {{`${dataset[i].value * 100}%`}}
+      g(:transform="`translate(${90*i}, 0)`")
+        rect(:x="0", :y="0", :width="20", :height="8", :fill="dataset[i].color")
+        text(:x="30", :y="8", fill="#000") {{dataset[i].label}}
 </template>
 
 <script>
@@ -41,7 +43,8 @@
     data () {
       return {
         padding,
-        descriptionHeight
+        descriptionHeight,
+        ACT_CLICK: 1
       }
     },
 
@@ -84,13 +87,21 @@
     },
 
     methods: {
+      onClickGroup (i) {
+        this.$emit('action', {
+          origin: this,
+          act: this.ACT_CLICK,
+          payload: i
+        })
+      }
     },
   }
 </script>
 
 <style lang="stylus">
   .pie-chart
-    .label
-      font-size: 18px
-      font-weight: bold
+    .group
+      cursor pointer
+      &:hover
+        opacity 0.5
 </style>

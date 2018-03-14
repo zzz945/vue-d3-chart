@@ -1,7 +1,7 @@
 <template lang="pug">
   .radar-chart-demo
     p.title Radar Chart Demo
-    radar-chart(:width="400", :dimensions="dimensions", :dataset="dataset")
+    radar-chart(:width="400", :dimensions="dimensions", :dataset="dataset", @action="onRadarChartAction")
 </template>
 
 <script>
@@ -34,6 +34,20 @@ export default {
   computed: {
   },
   methods: {
+    onRadarChartAction (params) {
+      const {origin, act, payload} = params
+
+      switch (act) {
+        case origin.ACT_CLICK:
+          alert(`Region ${payload} clicked`)
+          break
+        case origin.ACT_CLICK_DIMENSION_LABEL:
+          alert(`${this.dimensions[payload]} clicked`)
+          break
+        default:
+          break
+      }
+    }
   }
 }
 </script>

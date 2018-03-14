@@ -1,11 +1,11 @@
 <template lang="pug">
   svg.bar-chart(:width="width", :height="height")
     g(:transform="`translate(${padding}, ${padding})`")
-      g(class="y-axis", v-axis:y="yAxis")
-        text(class="label", fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
-      g(class="x-axis", v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
+      g.y-axis(v-axis:y="yAxis")
+        text.label(fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
+      g.x-axis(v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
         text(class="label", fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}
-      rect(v-for="r in rectList", :x="r.x", :y="r.y", :width="r.width", :height="r.height", :fill="r.color")
+      rect.bar(v-for="(r, i) in rectList", :x="r.x", :y="r.y", :width="r.width", :height="r.height", :fill="r.color", @click="onRectBarClick(i)")
 </template>
 
 <script>
@@ -43,6 +43,7 @@
     data () {
       return {
         padding,
+        ACT_CLICK: 1,
       }
     },
 
@@ -98,13 +99,20 @@
             color: d.color ? d.color : 'red'
           }
         })
-      },
+      }
     },
 
     mounted() {
     },
 
     methods: {
+      onRectBarClick (i) {
+        this.$emit('action', {
+          origin: this,
+          act: this.ACT_CLICK,
+          payload: i
+        })
+      }
     },
   }
 </script>
@@ -116,4 +124,8 @@
     .label
       font-size: 18px
       font-weight: bold
+    .bar
+      cursor: pointer
+      &:hover
+        opacity: 0.6
 </style>

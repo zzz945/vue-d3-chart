@@ -1,23 +1,35 @@
 <template lang="pug">
   svg.radar-chart(:width="width", :height="height")
-    g(v-for="(d, i) in dataset", :transform="`translate(${padding + 90*i}, ${padding})`")
-      rect(:x="0", :y="0", :width="20", :height="8", :fill="d.color")
-      text(:x="30", :y="8", fill="#000") {{d.label}}
-    g(:transform="`translate(${padding }, ${padding + descriptionHeight})`")
-      //- 描述
-      text(v-for="(label, i) in dimensions",
-        :transform="`translate(${radarRaidus + textRasius * Math.sin(angles[i]) - padding/3}, ${radarRaidus - textRasius * Math.cos(angles[i]) + padding/6})`") {{label}}
-      //- 画网
-      polygon(v-for="(n, i) in nets", :points="n", :style="{fill: 'none', stroke: 'gray'}")
-      line(v-for="(p, i) in mostOutsizePolygon", :x1="p.x", :y1="p.y", :x2="radarRaidus", :y2="radarRaidus", :style="{stroke: 'gray'}")
-      //- 画数据轮廓
-      polygon(v-for="(d, i) in dataPolygons", :points="d", :style="{fill: dataset[i].color, fillOpacity: 0.1, stroke: dataset[i].color, strokeWidth: 2}")
-       //- 网每层的数值显示
-      text(v-for="(v, i) in netValues",
-        :transform="`translate(${radarRaidus + 4}, ${radarRaidus * (100-v)/100})`") {{v}}
+    g(:transform="`translate(${padding}, ${padding})`")
+      //- 画坐标系
+      g(:transform="`translate(0, ${descriptionHeight})`")
+        //- 维度Label
+        text.dimension-label(v-for="(label, i) in dimensions",
+          :transform="`translate(${radarRaidus + textRasius * Math.sin(angles[i]) - padding/3}, ${radarRaidus - textRasius * Math.cos(angles[i]) + padding/6})`",
+          @click="onClickDimensionLabel(i)") {{label}}
+        //- 画网
+        polygon(v-for="(n, i) in nets", :points="n", :style="{fill: 'none', stroke: 'gray'}")
+        line(v-for="(p, i) in mostOutsizePolygon", :x1="p.x", :y1="p.y", :x2="radarRaidus", :y2="radarRaidus", :style="{stroke: 'gray'}")
+        //- 网每层的数值显示
+        text(v-for="(v, i) in netValues",
+          :transform="`translate(${radarRaidus + 4}, ${radarRaidus * (100-v)/100})`") {{v}}
+      //- 画数据
+      g.group(v-for="item in dataPolygons", @click="onClickGroup(item.index)", v-on:mouseover="onGroupHover(item.index)")
+        //- 数据Label
+        g.label(:transform="`translate(${90*item.index}, 0)`")
+          rect(:x="0", :y="0", :width="20", :height="8", :fill="dataset[item.index].color")
+          text(:x="30", :y="8", fill="#000") {{dataset[item.index].label}}
+        //- 数据多边形
+        g(:transform="`translate(0, ${descriptionHeight})`")
+          polygon.data-polygon(:points="item.d",
+            :style="{fill: dataset[item.index].color, stroke: dataset[item.index].color}")
+
 </template>
 
 <script>
+
+  import _cloneDeep from 'lodash/cloneDeep'
+
   const padding = 50
   const descriptionHeight = 60
 
@@ -46,7 +58,10 @@
       return {
         padding,
         descriptionHeight,
-        netValues: [100, 80, 60, 40, 20]
+        netValues: [100, 80, 60, 40, 20],
+        focusIndex: 0,
+        ACT_CLICK: 1,
+        ACT_CLICK_DIMENSION_LABEL: 2
       }
     },
 
@@ -84,13 +99,28 @@
           return this.valueToPoint(100, i)
         })
       },
-      // 根据dataset计算出的多边形数组，直接用于svg polygon
+      // 根据dataset和focusIndex计算出的多边形数组，直接用于svg polygon
       dataPolygons () {
-        return this.dataset.map(item => {
-          return item.d.map((v, i) => {
+        // svg中不支持通过style设置z-index, 而是最后一个子元素z-index最高
+        // 这里把focusIndex对应的数据放到末尾使其位于最上层
+        const ds = _cloneDeep(this.dataset).map((d, i) => {
+          d.index = i
+          return d
+        })
+        const focusItem = ds[this.focusIndex]
+        ds.splice(this.focusIndex, 1)
+        ds.push(focusItem)
+
+        // 构建Polygons
+        return ds.map(item => {
+          const d = item.d.map((v, i) => {
             const point = this.valueToPoint(v, i)
             return point.x + ',' + point.y
           }).join(' ')
+          return {
+            index: item.index, // 原dataset中的index
+            d
+          }
         })
       },
       angles () {
@@ -117,6 +147,23 @@
           x: tx,
           y: ty
         }
+      },
+      onClickGroup (i) {
+        this.$emit('action', {
+          origin: this,
+          act: this.ACT_CLICK,
+          payload: i
+        })
+      },
+      onClickDimensionLabel (i) {
+        this.$emit('action', {
+          origin: this,
+          act: this.ACT_CLICK_DIMENSION_LABEL,
+          payload: i
+        })
+      },
+      onGroupHover (i) {
+        this.focusIndex = i
       }
     },
   }
@@ -124,7 +171,15 @@
 
 <style lang="stylus">
   .radar-chart
-    .label
-      font-size: 18px
-      font-weight: bold
+    .group
+      cursor pointer
+      .data-polygon
+        stroke-width: 2
+        fill-opacity 0.2
+      &:hover .label
+        opacity 0.5
+      &:hover .data-polygon
+        fill-opacity 1
+    .dimension-label
+      cursor pointer
 </style>

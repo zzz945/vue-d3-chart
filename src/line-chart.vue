@@ -1,14 +1,20 @@
 <template lang="pug">
   svg.line-chart(:width="width", :height="height")
     g(:transform="`translate(${padding}, ${padding})`")
-      g(class="x-axis", v-axis:y="yAxis")
-        text(class="label", fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
-      g(class="y-axis", v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
-        text(class="label", fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}
-      path(v-for="l in lines", :d="l.d", :style="{fill: 'none', stroke: l.stroke}")
-      g(v-if="lines.length > 1", v-for="(l, i) in lines", :transform="`translate(${dataViewWidth - 80}, ${20*i})`")
-        rect(:x="0", :y="0", :width="20", :height="4", :fill="l.stroke")
-        text(:x="40", :y="8", fill="#000") {{l.label}}
+      g.x-axis(v-axis:y="yAxis")
+        text.label(fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
+      g.y-axis(v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
+        text.label(fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}
+      g.group(v-for="(l, i) in lines", @click="onClickGroup(i)")
+        //- 沿着线画一条粗的透明线用来扩大click和hover区域
+        path(:d="l.d", :style="{fill: 'none', stroke: 'transparent', strokeWidth: 20}")
+        //- 画线
+        path(:d="l.d", :style="{fill: 'none', stroke: l.stroke, strokeWidth: 2}")
+        //- 画label
+        g(v-if="lines.length > 1",
+          :transform="`translate(${dataViewWidth - 80}, ${20*i})`")
+          rect(:x="0", :y="0", :width="20", :height="4", :fill="l.stroke")
+          text(:x="40", :y="8", fill="#000") {{l.label}}
 </template>
 
 <script>
@@ -46,6 +52,7 @@
     data () {
       return {
         padding,
+        ACT_CLICK: 1
       }
     },
 
@@ -112,6 +119,13 @@
     },
 
     methods: {
+      onClickGroup (i) {
+        this.$emit('action', {
+          origin: this,
+          act: this.ACT_CLICK,
+          payload: i
+        })
+      }
     },
   }
 </script>
@@ -123,4 +137,8 @@
     .label
       font-size: 18px
       font-weight: bold
+    .group
+      cursor pointer
+      &:hover
+        opacity 0.5
 </style>

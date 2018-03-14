@@ -5,7 +5,7 @@
       g(:transform="`translate(0, ${descriptionHeight})`")
         //- 维度Label
         text.dimension-label(v-for="(label, i) in dimensions",
-          :transform="`translate(${radarRaidus + textRasius * Math.sin(angles[i]) - padding/3}, ${radarRaidus - textRasius * Math.cos(angles[i]) + padding/6})`",
+          :transform="`translate(${(radarRaidus + textRasius * Math.sin(angles[i]) - padding/3).toFixed()}, ${(radarRaidus - textRasius * Math.cos(angles[i]) + padding/6).toFixed()})`",
           @click="onClickDimensionLabel(i)") {{label}}
         //- 画网
         polygon(v-for="(n, i) in nets", :points="n", :style="{fill: 'none', stroke: 'gray'}")
@@ -144,8 +144,8 @@
         var tx    = x * cos - y * sin + r
         var ty    = x * sin + y * cos + r
         return {
-          x: tx,
-          y: ty
+          x: tx.toFixed(2),
+          y: ty.toFixed(2)
         }
       },
       onClickGroup (i) {

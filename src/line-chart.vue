@@ -92,8 +92,8 @@
       },
       lines () {
         let path = d3.line()
-          .x(d => this.xScale(d.x))
-          .y(d => this.yScale(d.y));
+          .x(d => +this.xScale(d.x).toFixed(2))
+          .y(d => +this.yScale(d.y).toFixed(2));
 
         if (Array.isArray(this.line)) {
           return this.line.map(l => {

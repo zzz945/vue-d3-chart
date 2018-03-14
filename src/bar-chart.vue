@@ -89,10 +89,10 @@
       },
       rectList () {
         return this.dataset.map(d => {
-          const h = this.yScale(d.y)
+          const h = +this.yScale(d.y).toFixed(2)
           const w = this.bandWidth/2 // Bar宽度为X轴单位宽度的一半
           return {
-            x: this.xScale(d.x) - w/2,
+            x: +this.xScale(d.x).toFixed(2) - w/2,
             y: h,
             width: w,
             height: this.dataViewHeight - h,

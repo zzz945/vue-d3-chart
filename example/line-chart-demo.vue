@@ -2,7 +2,7 @@
   .line-chart-demo
     p.title Line Chart Demo
     line-chart(:width="800", :height="400", :axis="c1.axis", :line="c1.line", @action="onLineChartAction")
-    line-chart(:width="800", :height="400", :axis="c2.axis", :line="c2.line", @action="onLineChartAction")
+    line-chart(:width="800", :height="400", :axis="c2.axis", :line="c2.line", :showGrid="true", @action="onLineChartAction2")
     line-chart(:width="800", :height="400", :axis="c3.axis", :line="c3.line", @action="onLineChartAction")
 </template>
 
@@ -112,8 +112,18 @@ export default {
       const {origin, act, payload} = params
 
       switch (act) {
-        case origin.ACT_CLICK:
+        case origin.ACT_CLICK_LINE:
           alert(`Line ${payload} clicked`)
+          break
+        default:
+          break
+      }
+    },
+    onLineChartAction2 (params) {
+      const {origin, act, payload} = params
+      switch (act) {
+        case origin.ACT_CLICK_DOT:
+          alert(`Dot ${payload.pointIndex} in line ${payload.lineIndex} clicked`)
           break
         default:
           break

@@ -18,9 +18,9 @@
           :transform="`translate(${dataViewWidth - 80}, ${20*i})`")
           rect(:x="0", :y="0", :width="20", :height="4", :fill="l.stroke")
           text(:x="40", :y="8", fill="#000") {{l.label}}
-      g.dots(v-show="showGrid")
-        template(v-for="(l, i1) in scaledDataset")
-          circle(v-for="(p, i2) in l", :cx="p.x", :cy="p.y", :r="4", @click="onClickDot(i1, i2)")
+        //- 画点
+        g.dots(v-show="showDots")
+          circle(v-for="(p, j) in scaledDataset[i]", :cx="p.x", :cy="p.y", :r="4", @click.stop="onClickDot(i, j)")
 </template>
 
 <script>
@@ -54,6 +54,10 @@
         required: true
       },
       showGrid: { // 显示格子
+        type: Boolean,
+        required: false
+      },
+      showDots: { // 显示点
         type: Boolean,
         required: false
       }

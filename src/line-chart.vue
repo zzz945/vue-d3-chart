@@ -36,7 +36,7 @@
           //- 横线
           template
             line(:x1="0", :y1="p.yScaled", :x2="dataViewWidth", :y2="p.yScaled")
-            text(:x="p.xScaled + 8", :y="p.yScaled - 8") {{p.y}}
+            text(:x="8", :y="p.yScaled - 8") {{p.y}}
           //- 交点
           circle(:cx="p.xScaled", :cy="p.yScaled", :r="4")
 </template>

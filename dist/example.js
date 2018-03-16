@@ -1922,7 +1922,6 @@ const descriptionHeight = 60;
       });
     },
     onGroupHover(i) {
-      console.log(i);
       this.focusIndex = i;
     }
   }
@@ -4073,11 +4072,9 @@ var render = function() {
                         y2: p.yScaled
                       }
                     }),
-                    _c(
-                      "text",
-                      { attrs: { x: p.xScaled + 8, y: p.yScaled - 8 } },
-                      [_vm._v(_vm._s(p.y))]
-                    )
+                    _c("text", { attrs: { x: 8, y: p.yScaled - 8 } }, [
+                      _vm._v(_vm._s(p.y))
+                    ])
                   ],
                   _c("circle", {
                     attrs: { cx: p.xScaled, cy: p.yScaled, r: 4 }

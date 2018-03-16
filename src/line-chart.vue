@@ -16,7 +16,7 @@
         //- 沿着线画一条粗的透明线用来扩大click和hover区域
         path(:d="l.d", :style="{fill: 'none', stroke: 'transparent', strokeWidth: 20}")
         //- 画线
-        path(:d="l.d", :style="{fill: 'none', stroke: l.stroke, strokeWidth: 2}")
+        path(ref="lines", :d="l.d", :style="{fill: 'none', stroke: l.stroke, strokeWidth: 2}")
         //- 画label
         g(v-if="pathDataOfLines.length > 1",
           :transform="`translate(${dataViewWidth - 80}, ${20*i})`")
@@ -28,7 +28,7 @@
       //- 跟踪鼠标交叉线
       g.cross(v-show="trackMouse", v-on:mousemove="onMouseMove", v-on:mouseleave="onMouseLeave")
         rect.placeholder(:x="0", :y="0", :width="dataViewWidth", :height="dataViewHeight", fill="transparent")
-        template(v-for="(p, i) in crossLine")
+        template(v-for="(p, i) in crossPoints", v-if="p")
           //- 竖线只画一条
           template(v-if="!i")
             line(:x1="p.xScaled", :y1="0", :x2="p.xScaled", :y2="dataViewHeight")
@@ -43,10 +43,10 @@
 
 <script>
   import AxisDirectorMixin from './utils/_axis-director-mixin.js'
-  import _inRange from 'lodash/inRange'
   import _throttle from 'lodash/throttle'
 
   const padding = 40
+  const POINT_COUNT_OF_LINE_PATH = 100
 
   export default {
     name: 'line-chart',
@@ -92,7 +92,7 @@
         padding,
         ACT_CLICK_LINE: 1,
         ACT_CLICK_DOT: 2,
-        crossLine : []
+        crossPoints : [] // 十字线和数据线的交点
       }
     },
 
@@ -157,6 +157,19 @@
           })
         })
       },
+      // 返回每条线上N个抽样点
+      pointsOfLinePath () {
+        return this.$refs.lines.map(p => {
+          const totalLength = p.getTotalLength()
+          const points = []
+          const count = POINT_COUNT_OF_LINE_PATH
+          let n = count
+          while (n--) {
+            points.unshift(p.getPointAtLength(totalLength/(count - 1) * n))
+          }
+          return points
+        })
+      },
       // 返回每组数据对应的svg path data
       pathDataOfLines () {
         let path = d3.line()
@@ -175,6 +188,10 @@
     },
 
     mounted() {
+      this.$nextTick(_ => {
+        const fasef = this.pointsOfLinePath
+        console.log(fasef)
+      })
     },
 
     methods: {
@@ -201,26 +218,27 @@
       onMouseMove (e) {
         const _onMouseMove = _throttle(e => {
           const offsetX = e.offsetX - this.padding
-          if (!_inRange(offsetX, 0, this.dataViewWidth)) return
-          const x = this.xScale.invert(offsetX).toFixed(2)
+          const offsetY = e.offsetY - this.padding
+          if (offsetX > this.dataViewWidth || offsetY > this.dataViewWidth) return
           const bisect = d3.bisector(d => d.x).left
-          this.crossLine = this.lines.map(l => {
-            const i = bisect(l.dataset, x)
-            const p0 = l.dataset[i]
-            const p1 = l.dataset[i - 1]
-            const y = +(p0.y + (p1.y - p0.y)/(p1.x - p0.x) * (x - p0.x)).toFixed(2)
+          this.crossPoints = this.pointsOfLinePath.map(points => {
+            const i = bisect(points, offsetX)
+            if (i < 1 || i > POINT_COUNT_OF_LINE_PATH - 1) return null
+            const p0 = points[i]
+            const p1 = points[i - 1]
+            const yScaled = +(p0.y + (p1.y - p0.y)/(p1.x - p0.x) * (offsetX - p0.x)).toFixed(2)
             return {
-              x,
-              y,
+              x: this.xScale.invert(offsetX).toFixed(2),
+              y: this.yScale.invert(yScaled).toFixed(2),
               xScaled: offsetX,
-              yScaled: +this.yScale(y).toFixed(2)
+              yScaled,
             }
           })
         }, 20)
         _onMouseMove(e)
       },
       onMouseLeave () {
-        this.crossLine  = []
+        this.crossPoints  = []
       }
     },
   }

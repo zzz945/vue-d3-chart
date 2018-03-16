@@ -1,7 +1,7 @@
 <template lang="pug">
   .line-chart-demo
     p.title Line Chart Demo
-    line-chart(:width="800", :height="400", :axis="c1.axis", :line="c1.line", @action="onLineChartAction")
+    line-chart(:width="800", :height="400", :axis="c1.axis", :line="c1.line", :trackMouse="true", @action="onLineChartAction")
     line-chart(:width="800", :height="400", :axis="c2.axis", :line="c2.line", :showGrid="true", :showDots="true", @action="onLineChartAction")
     line-chart(:width="800", :height="400", :axis="c3.axis", :line="c3.line", :trackMouse="true", @action="onLineChartAction")
 </template>

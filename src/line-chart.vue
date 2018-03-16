@@ -3,7 +3,7 @@
     g(:transform="`translate(${padding}, ${padding})`")
       //- X轴
       g.x-axis(v-axis:y="yAxis")
-        text.label(fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
+        text.label(fill="#000", text-anchor="start", transform="translate(20, 4)") {{axis.xLabel}}
       //- Y轴
       g.y-axis(v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
         text.label(fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}

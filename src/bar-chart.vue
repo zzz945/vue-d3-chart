@@ -2,7 +2,7 @@
   svg.bar-chart(:width="width", :height="height")
     g(:transform="`translate(${padding}, ${padding})`")
       g.y-axis(v-axis:y="yAxis")
-        text.label(fill="#000", transform="translate(60, 4)") {{axis.xLabel}}
+        text.label(fill="#000", text-anchor="start", transform="translate(20, 4)") {{axis.xLabel}}
       g.x-axis(v-axis:x="xAxis", :transform="`translate(0, ${dataViewHeight})`")
         text(class="label", fill="#000", :transform="`translate(${dataViewWidth - 10}, -20)`") {{axis.yLabel}}
       rect.bar(v-for="(r, i) in rectList", :x="r.x", :y="r.y", :width="r.width", :height="r.height", :fill="r.color", @click="onRectBarClick(i)")

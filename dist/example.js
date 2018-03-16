@@ -3051,7 +3051,11 @@ var render = function() {
                 "text",
                 {
                   staticClass: "label",
-                  attrs: { fill: "#000", transform: "translate(60, 4)" }
+                  attrs: {
+                    fill: "#000",
+                    "text-anchor": "start",
+                    transform: "translate(20, 4)"
+                  }
                 },
                 [_vm._v(_vm._s(_vm.axis.xLabel))]
               )
@@ -3759,7 +3763,11 @@ var render = function() {
                 "text",
                 {
                   staticClass: "label",
-                  attrs: { fill: "#000", transform: "translate(60, 4)" }
+                  attrs: {
+                    fill: "#000",
+                    "text-anchor": "start",
+                    transform: "translate(20, 4)"
+                  }
                 },
                 [_vm._v(_vm._s(_vm.axis.xLabel))]
               )

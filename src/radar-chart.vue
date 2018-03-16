@@ -163,6 +163,7 @@
         })
       },
       onGroupHover (i) {
+        console.log(i)
         this.focusIndex = i
       }
     },

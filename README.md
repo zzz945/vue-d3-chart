@@ -3,8 +3,7 @@ A interactive chart library based on vue and d3
 ## Look at the demo
 [DEMO](https://zzz945.github.io/vue-d3-chart/)
 ## Why do this but not using other chart library like C3
-Config other chart library like C3 to fit our needs is too complicated. If you have a lot of data visualization needs in your work, I recommend you write your own chart library. Vue and D3 is popular awesome, if you are familier with them, you can write
-your own chart library based on this project.
+Config other chart library like C3 to fit our needs is too complicated. If you have a lot of data visualization needs in your work, I recommend you write your own chart library. Vue and D3 is popular and awesome, if you are familier with them, you can write your own chart library based on this project.
 ## Develop your own chart library (Recommended)
 ```
 1.  Fork this project

@@ -9,9 +9,8 @@ let webpackConfig = merge(baseWebpackConfig, {
     publicPath: '/'
   },
   devServer: {
-    contentBase: path.join(__dirname, './example'),
     compress: true,
-    openPage: 'demo.html',
+    openPage: 'index.html',
     open: true,
     port: 9000
   }

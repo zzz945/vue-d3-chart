@@ -3,7 +3,7 @@
     p.title Line Chart Demo
     line-chart(:width="800", :height="400", :axis="c1.axis", :line="c1.line", @action="onLineChartAction")
     line-chart(:width="800", :height="400", :axis="c2.axis", :line="c2.line", :showGrid="true", :showDots="true", @action="onLineChartAction")
-    line-chart(:width="800", :height="400", :axis="c3.axis", :line="c3.line", @action="onLineChartAction")
+    line-chart(:width="800", :height="400", :axis="c3.axis", :line="c3.line", :trackMouse="true", @action="onLineChartAction")
 </template>
 
 <script>
@@ -51,8 +51,8 @@ const c2 = {
     xDiv: 7,
     y: [0, 100],
     yDiv: 10,
-    xLabel: "Day",
-    yLabel: "Temp",
+    xLabel: "Temp",
+    yLabel: "Day",
   },
   line: {
     color: 'green',
@@ -69,23 +69,47 @@ const c2 = {
 }
 
 const c3 = {
-  axis: c2.axis,
+  axis: {
+    x: [100, 200],
+    xDiv: 7,
+    y: [0, 100],
+    yDiv: 10,
+    xLabel: "Volume",
+    yLabel: "Temp",
+  },
   line: [
-    Object.assign({}, c2.line, {
-      label: 'China',
-      color: 'green',
-    }),
     {
-      label: 'American',
+      label: 'Gold',
+      color: 'green',
+      dataset: [
+        {x: 100, y: 34},
+        {x: 110, y: 56},
+        {x: 120, y: 67},
+        {x: 130, y: 89},
+        {x: 140, y: 45},
+        {x: 150, y: 67},
+        {x: 160, y: 87},
+        {x: 170, y: 90},
+        {x: 180, y: 65},
+        {x: 190, y: 54},
+        {x: 200, y: 43},
+      ],
+    },
+    {
+      label: 'Silver',
       color: 'red',
       dataset: [
-        {x: 0, y: 34},
-        {x: 1, y: 56},
-        {x: 2, y: 67},
-        {x: 3, y: 89},
-        {x: 4, y: 45},
-        {x: 5, y: 67},
-        {x: 6, y: 77},
+        {x: 100, y: 87},
+        {x: 110, y: 65},
+        {x: 120, y: 54},
+        {x: 130, y: 43},
+        {x: 140, y: 65},
+        {x: 150, y: 87},
+        {x: 160, y: 65},
+        {x: 170, y: 54},
+        {x: 180, y: 43},
+        {x: 190, y: 32},
+        {x: 200, y: 21},
       ],
     }
   ]

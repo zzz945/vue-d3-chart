@@ -3,4 +3,3 @@ node_modules
 .idea
 .jshintrc
 *.log
-dist

@@ -1539,12 +1539,7 @@ const POINT_COUNT_OF_LINE_PATH = 100;
     }
   },
 
-  mounted() {
-    this.$nextTick(_ => {
-      const fasef = this.pointsOfLinePath;
-      console.log(fasef);
-    });
-  },
+  mounted() {},
 
   methods: {
     // 点击每组数据对应的视图元素，包括线和label等
@@ -3217,7 +3212,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.line-chart .tick text {\n  font-size: 14px;\n}\n.line-chart .label {\n  font-size: 18px;\n  font-weight: bold;\n}\n.line-chart .group {\n  cursor: pointer;\n}\n.line-chart .group:hover {\n  opacity: 0.5;\n}\n.line-chart .grid line {\n  stroke: #808080;\n}\n.line-chart .dots circle {\n  cursor: pointer;\n  stroke: #000;\n}\n.line-chart .cross circle {\n  stroke: #000;\n}\n.line-chart .cross line {\n  stroke: #000;\n}\n.line-chart .cross text {\n  fill: #000;\n}\n", ""]);
+exports.push([module.i, "\n.line-chart .tick text {\n  font-size: 14px;\n}\n.line-chart .label {\n  font-size: 18px;\n  font-weight: bold;\n}\n.line-chart .group {\n  cursor: pointer;\n}\n.line-chart .group:hover {\n  opacity: 0.5;\n}\n.line-chart .grid line {\n  stroke: #808080;\n}\n.line-chart .dots circle {\n  cursor: pointer;\n  stroke: #000;\n}\n.line-chart .cross circle {\n  cursor: pointer;\n  stroke: #000;\n}\n.line-chart .cross line {\n  stroke: #000;\n}\n.line-chart .cross text {\n  fill: #000;\n}\n", ""]);
 
 // exports
 
@@ -3967,7 +3962,12 @@ var render = function() {
                         ])
                       ],
                       _c("circle", {
-                        attrs: { cx: p.xScaled, cy: p.yScaled, r: 4 }
+                        attrs: { cx: p.xScaled, cy: p.yScaled, r: 4 },
+                        on: {
+                          click: function($event) {
+                            _vm.onClickGroup(i)
+                          }
+                        }
                       })
                     ]
                   : _vm._e()
